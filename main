@@ -1,0 +1,257 @@
+#SingleInstance, Force
+pButton_StartUp() 
+global pButton:={}
+global Press_active:=0,Hover_On:=0,Active_Button
+
+
+Gui,1:+AlwaysOnTop
+Gui,1:Color,cC69F56
+Gui,1:Font,cC69F56 s12,
+
+pButton.Push(New Progress_Button("1",pButton.Length()+1,"Test",10,10,100,30,"FFD700","FFD700","FFD700","222222","FFD700","MinerJump",0))
+pButton.Push(New Progress_Button("1",pButton.Length()+1,"Test2",125,10,100,30,"FFD700","FFD700","FFD700","222222","FFD700","AutoClicker",0))
+
+pButton.Push(New Progress_Button("1",pButton.Length()+1,"Test4",200,80,70,20,"FFD700","FFD700","FFD700","222222","FFD700","Discord",0))
+
+
+pButton.Push(New Progress_Button("1",pButton.Length()+1,"Test7",10,45,100,30,"FFD700","FFD700","FFD700","222222","FFD700","Restart Script",0))
+pButton.Push(New Progress_Button("1",pButton.Length()+1,"Test8",10,80,180,20,"FFD700","FFD700","FFD700","222222","FFD700","Subscribe/Enjoy",0))
+
+
+
+Gui,1:Show, y0 w280 h100, BitCoinAFKMinerV1
+
+return
+GuiClose:
+ExitApp
+
+--10,45,100,30 
+Test:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+MsgBox Reminder: Jumping and Also Clicking so you Could just press Restart Script Instead of Pausing Script
+Loop,
+
+{
+
+click
+send {space down}
+send {space up 
+send {space down}
+send {space up 
+send {space down}
+send {space up 
+send {space down}
+send {space up 
+send {space down}
+send {space up 
+
+
+}
+  
+Test2:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+MsgBox Use this part of the/da script to AFK or to auto click stuff without using your mouse, you need to be at the shop. Ctrl F to stop and start
+ Loop,
+
+{
+
+sleep 1
+click 
+
+
+}
+    return
+
+Test3:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+Loop,
+
+{
+
+
+
+}
+    return
+
+Test4:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+Run https://discord.gg/qf3exgf
+    return
+
+Test5:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+MsgBox You'll Be Clicking and jumping 
+Loop,
+
+{
+
+
+
+}
+    return
+
+Test6:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+Loop,
+
+{
+
+   
+                                  
+}
+    return
+
+Test7:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+Reload
+    return
+
+Test8:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+Run http://www.youtube.com/channel/UCVEd1JGU60Uye66cvrknX0A?sub_confirmation=1
+MsgBox Make Sure To Subscribe to the Channel Also Enjoy!
+    return
+
+Test9:
+    if(!pButton[A_GuiControl].Button_Press()) 
+        return
+MsgBox Click Restart To Use Another Script, Click Ctrl+f To Pause Scripts.
+    return
+
+
+   
+
+
+
+pButton_StartUp(){
+	SetTimer,Watch_Hover,10
+}
+Watch_Hover(){
+	global
+	if(Press_active=0){
+		if(Hover_On=0){
+			MouseGetPos,,,,ctrl,2
+			loop,% pButton.Length()	{
+				GuiControlGet,cName,% pButton[A_Index].Window_Name ":Name",% ctrl
+				cut:=Strlen(cName)
+				StringLeft,bName,cName,cut-2
+				;~ Loop,% pButton.Length()
+					if(bname=pButton[A_Index].Button_Name){
+						pButton[A_Index].Button_Hover_On()
+						Hover_On:=1,Active_Button:=bname,win:=pButton[A_Index].Window_Name
+						return
+					}
+			}
+		}else if(Hover_On=1){
+			MouseGetPos,,,,ctrl,2
+			GuiControlGet,cName,%win%:Name,% ctrl
+			cut:=Strlen(cName)
+			StringLeft,nBName,cName,cut-2
+			if(NbName!=Active_Button){
+				pButton[Active_Button].Button_Hover_Off()
+					Hover_On:=0,Active_Button:=""
+			}
+		}
+	}
+}
+
+Class Progress_Button	{
+		__New(Window_Name,Button_Name,Label,x,y,w,h,BC,TRC,TC1,TC2,TC3,Button_Text,Text_Offset:=0)
+			{
+				This.Text_Offset:=Text_Offset
+				This.Window_Name:=Window_Name
+				This.Button_Name:=Button_Name
+				This.Label:=Label
+				This.Button_ID1:=Button_Name "_1"
+				This.Button_ID2:=Button_Name "_2"
+				This.Button_ID3:=Button_Name "_3"
+				This.Button_ID4:=Button_Name "_4"
+				This.Button_Text:=Button_Text
+				This.X:=x
+				This.Y:=y
+				This.W:=w
+				This.H:=h
+				This.Bottom_Color:=BC
+				This.Trim_Color:=TRC
+				This.Top_Color_1:=TC1
+				This.Top_Color_2:=TC2
+				This.Top_Color_3:=TC3
+				This.Add_Button()
+			}
+		Add_Button()
+			{
+				global
+				Gui,% This.Window_Name ":Add",Text,% "x" This.X " y" This.Y " w" This.W " h" This.H " v" This.Button_Name " g" This.Label
+				Gui,% This.Window_Name ":Add",Progress,% "x" This.X " y" This.Y " w" This.W " h" This.H " Background" This.Bottom_Color " v" This.Button_ID1
+				Gui,% This.Window_Name ":Add",Progress,% "x" This.X " y" This.Y " w" This.W-1 " h" This.H-1 " Background" This.Trim_Color " v" This.Button_ID2
+				Gui,% This.Window_Name ":Add",Progress,% "x" This.X+1 " y" This.Y+1 " w" This.W-2 " h" This.H-2 " Background" This.Top_Color_1 " v" This.Button_ID3
+				Gui,% This.Window_Name ":Add",Text,% "x" This.X+1 " y" This.Y+This.Text_Offset " w" This.W-2 " r1 Center BackgroundTrans v" This.Button_ID4,% This.Button_Text
+			}
+		Button_Press()
+			{
+				global
+				Press_Active:=1
+				GuiControl,% This.Window_Name ":Move",% This.Button_ID4,% "x" This.X+1 " y" This.Y+1+This.Text_Offset
+				sleep,-1
+				GuiControl,% This.Window_Name ":Hide",This.Button_ID2
+				GuiControl,% This.Window_Name ":+Background" This.Top_Color_3,% This.Button_ID3
+				GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID1
+				GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID3
+				GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID4
+				While(GetKeyState("LButton"))
+					Sleep, 10
+				MouseGetPos,,,,ctrl,2
+				GuiControlGet,cName,% win ":Name",% ctrl
+				cut:=Strlen(cName)
+				StringLeft,bName,cName,cut-2
+				if(bname=This.Button_Name)
+					{
+						GuiControl,% This.Window_Name ":Show",This.Button_ID2
+						GuiControl,% This.Window_Name ":+Background" This.Top_Color_1,% This.Button_ID3
+						GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID1
+						GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID2
+						GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID3
+						GuiControl,% This.Window_Name ":Move",% This.Button_ID4,% "x" This.X " y" This.Y+This.Text_Offset
+						GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID4
+						%bName%.Button_Hover_On()
+						Hover_On:=0
+						Active_Button:=bname
+						Press_Active:=0
+						sleep,10
+						return true
+					}
+				GuiControl,% This.Window_Name ":Show",This.Button_ID2
+				GuiControl,% This.Window_Name ":Move",% This.Button_ID4,% "x" This.X " y" This.Y+This.Text_Offset
+				GuiControl,% This.Window_Name ":+Background" This.Top_Color_1,% This.Button_ID3
+				GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID1
+				GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID2
+				GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID3
+				GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID4
+				Hover_On:=0
+				Press_Active:=0
+				sleep,10
+				return False
+			}
+		Button_Hover_On(){
+			global
+			GuiControl,% This.Window_Name ":+Background" This.Top_Color_2,% This.Button_ID3
+			GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID4
+		}
+		Button_Hover_Off()
+			{
+				global
+				GuiControl,% This.Window_Name ":+Background" This.Top_Color_1,% This.Button_ID3
+				GuiControl,% This.Window_Name ":+Redraw",% This.Button_ID4
+			}
+	}
+
+^f::Pause
+^x::Reload
